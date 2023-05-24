@@ -53,3 +53,15 @@ header {
 .rotated {
   transform: rotateY(180deg);
 }
+
+/* Light mode styles */
+body {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Dark mode styles */
+.dark-mode {
+  background-color: #333333;
+  color: #ffffff;
+}

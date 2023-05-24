@@ -135,4 +135,33 @@ startButton.addEventListener('click', () => {
   startCountdown(59);
 });
 
+const toggleMode = () => {
+  const bodyElement = document.body;
+  bodyElement.classList.toggle('dark-mode');
+};
+
+const activatePowerUp = () => {
+  const cards = document.querySelectorAll('.card');
+
+  // Array to store unmatched cards
+  const unmatchedCards = [];
+
+  // Flip over unmatched cards
+  cards.forEach((card) => {
+    const [front, back] = getFrontAndBackFromCard(card);
+    if (!front.classList.contains('rotated')) {
+      unmatchedCards.push(card);
+      rotateElements([front, back]);
+    }
+  });
+
+  // Flip back unmatched cards after 1 second
+  setTimeout(() => {
+    unmatchedCards.forEach((card) => {
+      const [front, back] = getFrontAndBackFromCard(card);
+      rotateElements([front, back]);
+    });
+  }, 1000);
+};
+
 resetGame();

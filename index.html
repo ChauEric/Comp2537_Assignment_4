@@ -18,6 +18,10 @@
         <button id="start" onclick="resetGame()">Start</button>
         <br />
         <button id="restart" onclick="resetGame()">Restart</button>
+        <br />
+        <button id="mode-toggle-button" onclick="toggleMode()">
+          Toggle Mode
+        </button>
       </header>
       <div class="scores">
         <h2>Current Scores:</h2>
@@ -27,6 +31,11 @@
       <div id="timer-container">
         <h2>Timer: <span id="minute">0</span>:<span id="second">00</span></h2>
       </div>
+      <!-- Power-up button -->
+      <button id="power-up-button" onclick="activatePowerUp()">
+        Activate Power-up!
+      </button>
+
       <div id="game"></div>
     </div>
     <script src="index.js"></script>
