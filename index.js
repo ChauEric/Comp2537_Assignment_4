@@ -3,6 +3,7 @@ const game = document.getElementById('game');
 let isPaused = false;
 let firstPick;
 let matches;
+let clicks;
 
 const loadPokemon = async () => {
   const randomIDs = new Set();
@@ -20,6 +21,9 @@ const resetGame = async () => {
   isPaused = true;
   firstPick = null;
   matches = 0;
+  document.getElementById('matches').innerHTML = matches;
+  clicks = 0;
+  document.getElementById('num-clicks').innerHTML = clicks;
   setTimeout(async () => {
     const loadedPokemon = await loadPokemon();
     displayPokemon([...loadedPokemon, ...loadedPokemon]);
@@ -71,13 +75,18 @@ const clickCard = (event) => {
       }, 500);
     } else {
       matches++;
+      document.getElementById('matches').innerHTML = matches;
       if (matches === 8) {
-        console.log('WINNER');
+        setTimeout(() => {
+          alert('CONGRATULATIONS, YOU WIN');
+        }, 200);
       }
       firstPick = null;
       isPaused = false;
     }
   }
+  clicks++;
+  updateClicks();
 };
 
 const getFrontAndBackFromCard = (card) => {
@@ -90,5 +99,40 @@ const rotateElements = (elements) => {
   if (typeof elements !== 'object' || !elements.length) return;
   elements.forEach((element) => element.classList.toggle('rotated'));
 };
+
+const updateClicks = () => {
+  document.getElementById('num-clicks').innerHTML = clicks;
+};
+
+const startCountdown = (duration) => {
+  let countdown = duration;
+  let minuteElement = document.getElementById('minute');
+  let secondElement = document.getElementById('second');
+
+  let countdownInterval = setInterval(() => {
+    let minutes = Math.floor(countdown / 60);
+    let seconds = countdown % 60;
+
+    let secondsString = seconds.toString().padStart(2, '0');
+
+    minuteElement.innerHTML = minutes;
+    secondElement.innerHTML = secondsString;
+
+    if (countdown === 0) {
+      clearInterval(countdownInterval);
+    } else {
+      countdown--;
+    }
+  }, 1000); // 1000 milliseconds = 1 second
+};
+
+const restartButton = document.getElementById('restart');
+restartButton.addEventListener('click', () => {
+  startCountdown(59);
+});
+const startButton = document.getElementById('start');
+startButton.addEventListener('click', () => {
+  startCountdown(59);
+});
 
 resetGame();
